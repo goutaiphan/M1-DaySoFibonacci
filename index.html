@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>Dãy số Fibonacci</title>
+    <link href="style.css" rel="stylesheet">
+    <link href="baseStyle.css" rel="stylesheet">
+</head>
+<body>
+<p id="title">Dãy số Fibonacci</p>
+<div id="inputArea">
+    <p>Dãy số Fibonacci là tập hợp các số bắt đầu bằng 0 hoặc 1,
+        tiếp theo là một số tự nhiên dựa trên quy tắc bằng tổng của hai số trước đó, được gọi là số
+        Fibonacci.</p>
+    <p>Bạn mong muốn biết về dãy số Fibonacci với bao nhiêu chữ số?</p>
+    <input id="inputBox">
+</div>
+
+<button id="button">Thực hiện</button>
+
+<div id="resultArea">
+    <p id="fiboResult"></p>
+    <p id="calculation"></p>
+    <div id="fiboChart"></div>
+</div>
+</body>
+</html>
+
+<script>
+    let inputBox = document.getElementById('inputBox'),
+        button = document.getElementById('button'),
+        fiboResult = document.getElementById('fiboResult'),
+        fiboChart = document.getElementById('fiboChart'),
+        calculation = document.getElementById('calculation');
+
+    button.onclick = function () {
+        let fiboArray = [1, 1];
+        for (let i = 2; i < parseInt(inputBox.value); i++) {
+            fiboArray.push(fiboArray[i - 2] + fiboArray[i - 1]);
+        }
+        fiboResult.innerHTML = String(fiboArray.join(', '));
+
+        let fiboParent0 = [[1], [1, 1]];
+        for (let i = 2; i < parseInt(inputBox.value); i++) {
+            let fiboChild = fiboParent0[i - 1].slice(0, fiboParent0[i - 1].length);
+            fiboChild.push(1);
+            for (let j = 0; j < fiboParent0[i - 1].length - 1; j++) {
+                fiboChild[j + 1] = fiboParent0[i - 1][j] + fiboParent0[i - 1][j + 1];
+            }
+            fiboParent0.push(fiboChild);
+        }
+
+        let fiboParent1 = [];
+        for (let i = 0; i < parseInt(inputBox.value); i++) {
+            fiboParent1.push(fiboParent0[i].join('&nbsp;&nbsp;&nbsp;&nbsp;'));
+        }
+        fiboChart.innerHTML = String(fiboParent1.join('<br>'));
+
+        calculation.innerHTML = '';
+        let array = [['Tổng', '+'],
+            ['Hiệu', '-'],
+            ['Tích', '*'],
+            ['Thương', '/']];
+        for (let i = 0; i < array.length; i++) {
+            calculation.innerHTML = calculation.innerHTML + array[i][0] + ' của dãy số này là '
+                + eval(fiboArray.join(array[i][1])) + '.<br>';
+        }
+    }
+</script>
