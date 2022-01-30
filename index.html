@@ -20,6 +20,7 @@
 <button id="button">Thực hiện</button>
 
 <div id="resultArea">
+    <p id="note"></p>
     <p id="fiboResult"></p>
     <p id="calculation"></p>
     <div id="fiboChart"></div>
@@ -30,6 +31,7 @@
 <script>
     let inputBox = document.getElementById('inputBox'),
         button = document.getElementById('button'),
+        note = document.getElementById('note'),
         fiboResult = document.getElementById('fiboResult'),
         fiboChart = document.getElementById('fiboChart'),
         calculation = document.getElementById('calculation');
@@ -50,6 +52,8 @@
             }
             fiboParent0.push(fiboChild);
         }
+
+        note.innerHTML = 'Dãy ' + fiboParent0.length + ' số Fibonacci.';
 
         let fiboParent1 = [];
         for (let i = 0; i < parseInt(inputBox.value); i++) {
